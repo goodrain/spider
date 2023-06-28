@@ -19,3 +19,7 @@ class PackageItem(scrapy.Item):
     file_names = scrapy.Field()
     files = scrapy.Field()
     repository_name = scrapy.Field()
+    category = scrapy.Field()
+    image_urls = scrapy.Field()
+    images = scrapy.Field()
+    normalized_name = scrapy.Field()

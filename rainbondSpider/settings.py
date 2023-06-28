@@ -20,14 +20,15 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
 ROBOTSTXT_OBEY = True
 
 # 并发请求数量设置(default: 16)
-CONCURRENT_REQUESTS = 8
 DOWNLOAD_TIMEOUT = 1800
 
+CONCURRENT_REQUESTS_PER_IP = 32
+CONCURRENT_REQUESTS = 32
 
-
-DOWNLOADER_MIDDLEWARES = {
-    'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
-}
+#
+# DOWNLOADER_MIDDLEWARES = {
+#     'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+# }
 
 RETRY_TIMES = 3  # 设置重试次数
 
@@ -73,17 +74,17 @@ RANDOMIZE_DOWNLOAD_DELAY = True
 #EXTENSIONS = {
 #    "scrapy.extensions.telnet.TelnetConsole": None,
 #}
-
+FILES_STORE = "rainbond_files"
+IMAGES_STORE = 'rainbond_images'
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # "rainbondSpider.pipelines.RainbondspiderPipeline": 300,
       "rainbondSpider.pipelines.FileDownloadPipeline": 1,
-      # "rainbondSpider.pipelines.PostDbPipelin": 2,
-      # "rainbondSpider.pipelines.DbPipelin": 3,
-      # "rainbondSpider.pipelines.MySpiderClosed": 4,
+      "rainbondSpider.pipelines.PostDbPipelin": 2,
+      "rainbondSpider.pipelines.DbPipelin": 3,
+      "rainbondSpider.pipelines.ImagesDownloadPipeline": 4,
 }
-# FILES_STORE = "rainbond"
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
