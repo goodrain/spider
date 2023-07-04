@@ -6,16 +6,13 @@ on:
       - master
 
 jobs:
-  Build-Blog-Based:
+  run-docker-command:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: RainbondSpider
+      - name: Run Docker Command
         run: |
-          docker pull offends163/demo:rainbond-spider
           docker run -it --name one \
           -e HOST=bj-cynosdbmysql-grp-hgxlkytw.sql.tencentcdb.com \
           -e PORT=20844 \
