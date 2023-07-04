@@ -4,7 +4,7 @@ COPY ./rainbondSpider /
 
 WORKDIR /rainbondSpider
 
-RUN pip install scrapy
+RUN pip install -r requirements.txt
 
 CMD scrapy crawl helmchart
 
