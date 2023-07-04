@@ -7,236 +7,6 @@ import requests
 import json
 
 from scrapy.utils.misc import md5sum
-#
-
-# class HanleData():
-#
-#   def __init__(self):
-#
-#     self.conn = None
-#
-#     self.cursor = None
-#
-#
-#
-#   def open_spider(self):
-#
-#     self.conn = pymysql.connect(
-#
-#       host="localhost",
-#
-#       port=3306,
-#
-#       user='root',
-#
-#       password='gr123465!',
-#
-#       database='helmDetail',
-#
-#       charset="utf8mb4"
-#
-#     )
-#
-#     self.cursor = self.conn.cursor()
-#
-#
-#
-#   def close_spider(self):
-#
-#     self.conn.commit()
-#
-#     self.conn.close()
-#
-#
-#
-#   def check_version_exists(self, package_id, version):
-#
-#     # 查询 package_id 对应的所有版本号
-#
-#     self.cursor.execute('SELECT version FROM chartDetail WHERE package_id = %s', (package_id,))
-#
-#     versions = [v[0] for v in self.cursor.fetchall()]
-#
-#     if version in versions:
-#
-#       return True
-#
-#     return False
-#
-#
-#
-#   def create_app(self, item):
-#
-#     # 执行新增操作
-#
-#     # 参数设置
-#
-#     url = "https://prestore.goodrain.com/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
-#
-#     data = {
-#
-#       'package_id': item['package_id'],
-#
-#       'version': item['version'],
-#
-#       'name': item['name'],
-#
-#       'description': item['description'],
-#
-#       'readme': item['readme'],
-#
-#       'logo_image_id': item['logo_image_id'],
-#
-#       'category': item['category'],
-#
-#     }
-#
-#     headers = {'content-type': 'application/json'}
-#
-#     res = requests.post(url, data=json.dumps(data), headers=headers)
-#
-#     return res.json()
-#
-#
-#
-#   def update_app(self, item):
-#
-#     # 参数设置
-#
-#     url = "https://prestore.goodrain.com/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
-#
-#     data = {
-#
-#       'package_id': item['package_id'],
-#
-#       'version': item['version'],
-#
-#       'name': item['name'],
-#
-#       'description': item['description'],
-#
-#       'readme': item['readme'],
-#
-#       'logo_image_id': item['logo_image_id'],
-#
-#       'category': item['category'],
-#
-#     }
-#
-#     headers = {'content-type': 'application/json'}
-#
-#     res = requests.put(url, data=json.dumps(data), headers=headers)
-#
-#     return res.json()
-#
-#
-#
-#   def check_package_exists(self, package_id):
-#
-#     # 查询 package_id 是否存在
-#
-#     query = 'SELECT package_id FROM chartDetail WHERE package_id = %s'
-#
-#     self.cursor.execute(query, (package_id,))
-#
-#     result = self.cursor.fetchone()
-#
-#     print("bool(result)=======", bool(result))
-#
-#     return bool(result)
-#
-#
-#
-#   def insert_db(self, item):
-#
-#
-#     package_id = item.get("package_id", '')
-#
-#     name = item.get("name", '')
-#
-#     version = item.get("version", '')
-#
-#     description = item.get("description", '')
-#
-#     readme = item.get("readme", '')
-#
-#     logo_image_id = item.get("logo_image_id", '')
-#
-#     category = item.get('category', 0),
-#
-#     query = 'INSERT INTO chartDetail (package_id, name, version, description, readme, logo_image_id, category) VALUES (%s, %s, %s, %s, %s, %s, %s)'
-#
-#     self.cursor.execute(query, (package_id, name, version, description, readme, logo_image_id, category))
-#
-#
-#
-#     return item
-#
-#
-#
-#
-#   def update_db(self, item):
-#
-#
-#     package_id = item.get("package_id", '')
-#
-#     name = item.get("name", '')
-#
-#     version = item.get("version", '')
-#
-#     description = item.get("description", '')
-#
-#     readme = item.get("readme", '')
-#
-#     logo_image_id = item.get("logo_image_id", '')
-#
-#     category = item.get('category', 0),
-#
-#     # 版本号在相同 package_id 下的所有 version 中，执行更新操作
-#
-#     query = 'UPDATE chartDetail SET description = %s, readme = %s, logo_image_id = %s, category = %s WHERE package_id = %s and version = %s'
-#
-#     self.cursor.execute(query, (description, readme, logo_image_id, category, package_id, version))
-#
-#     return item
-#
-#
-#
-#   def process_item(self, item):
-#
-#     hanle_data = HanleData()
-#
-#     hanle_data.open_spider()
-#
-#     exist_package = self.check_package_exists(package_id=item["package_id"])
-#
-#     if not exist_package:
-#
-#       res = self.create_app(item)
-#
-#       print("=======create app 11111=======", res)
-#
-#       self.insert_db(item)
-#
-#     else:
-#
-#       exist_version = self.check_version_exists(package_id=item["package_id"], version=item["version"])
-#
-#       if exist_version:
-#
-#         res = self.update_app(item)
-#
-#         print("=======update app 11111=======", res)
-#
-#         self.update_db(item)
-#
-#       else:
-#
-#         res = self.create_app(item)
-#
-#         print("=======create version 11111=======", res)
-#
-#         self.insert_db(item)
 
 class PostDbPipelin():
   def __init__(self):
@@ -286,7 +56,7 @@ class PostDbPipelin():
 
     # 参数设置
 
-    url = "http://4000.grc580e8.qf85jobv.17f4cc.grapps.cn/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
+    url = "https://hub.grapps.cn/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
     data = {
       'package_id': item['package_id'],
       'version': item['version'],
@@ -303,7 +73,7 @@ class PostDbPipelin():
 
     # 参数设置
 
-    url = "https://prestore.goodrain.com/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
+    url = "https://hub.grapps.cn/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
     data = {
       'package_id': item['package_id'],
       'version': item['version'],
@@ -430,7 +200,6 @@ class ImagesDownloadPipeline(ImagesPipeline):
         yield Request(image_url)
 
     def image_downloaded(self, response, request, info, *, item=None):
-      print("item======================================", item)
       checksum = None
       for path, image, buf in self.get_images(response, request, info, item=item):
         if checksum is None:
@@ -438,10 +207,9 @@ class ImagesDownloadPipeline(ImagesPipeline):
           checksum = md5sum(buf)
           file_name = item["name"]
           market_id = "859a51f9bb3b48b5bfd222e3bef56425"
-          url = "https://prestore.goodrain.com/app-server/markets/{}/helm/{}/icon".format(market_id, file_name)
+          url = "https://hub.grapps.cn/app-server/markets/{}/helm/{}/icon".format(market_id, file_name)
           headers = {'Content-Type': 'image/jpeg'}
           resp = requests.post(url, data=buf.getvalue(), headers=headers)
-          print('+===================resp================', resp.json())
       return checksum
 
 class FileDownloadPipeline(FilesPipeline):
@@ -463,7 +231,7 @@ class FileDownloadPipeline(FilesPipeline):
       buf = BytesIO(response.body)
       checksum = md5sum(buf)
       buf.seek(0)
-      url = "https://prehub.grapps.cn/api/charts"
+      url = "https://charts.grapps.cn/api/charts"
       headers = {"Content-Type": "application/octet-stream"}
       chart_resp = requests.post(url, headers=headers, data=buf).json()
       return checksum

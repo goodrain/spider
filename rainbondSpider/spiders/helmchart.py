@@ -120,8 +120,8 @@ class HelmchartSpider(scrapy.Spider):
     # 获取应用介绍、logo地址
     html_content = data.get('readme', '')
     # 替换 readme 内容
-    new_repo_url = f"https://prehub.grapps.cn/"
-    new_repo_name=f" rainchart/{package_item['name']}"
+    new_repo_url = f"https://charts.grapps.cn/"
+    new_repo_name=f" appstore/{package_item['name']}"
     pattern = r'helm (repo add|install) ([^\s]+) ([^\s]+)'
     result = re.search(pattern, html_content)
     if result:
@@ -134,7 +134,7 @@ class HelmchartSpider(scrapy.Spider):
         old_name = f" {repo_name} "
         old_repo_name = f" {repo_name}/{package_item['name']}"
         html_content = html_content.replace(old_repo_name, new_repo_name)
-        html_content = html_content.replace(old_name, " rainchart ")
+        html_content = html_content.replace(old_name, " appstore ")
     logo = data.get('logo_image_id', '')
     category = data.get('category', '')
     if logo == "":
