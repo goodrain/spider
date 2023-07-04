@@ -14,13 +14,12 @@ jobs:
       - name: Run Docker Command
         run: |
           docker run --name rainbondspider \
-          -e HOST=bj-cynosdbmysql-grp-hgxlkytw.sql.tencentcdb.com \
-          -e PORT=20844 \
-          -e USER=root \
-          -e PASSWORD='offends@dh4' \
-          -e DATABASE=helmDetail \
-          -e MARKETURL=http://prestore.17f4cc.grapps.cn \
-          -e MARKETID=b85ca319b29347748ffea620ce1cee6e \
-          -e CHARTURL=http://8080.grc81b1e.qf85jobv.17f4cc.grapps.cn \
-          offends163/demo:rainbond-spider
-          docker logs -f rainbondspider
+          -e HOST=${{ secrets.HOST }} \
+          -e PORT=${{ secrets.PORT }} \
+          -e USER=${{ secrets.USER }} \
+          -e PASSWORD=${{ secrets.PASSWORD }} \
+          -e DATABASE=${{ secrets.DATABASE }} \
+          -e MARKETURL=${{ secrets.MARKETURL }} \
+          -e MARKETID=${{ secrets.MARKETID }} \
+          -e CHARTURL=${{ secrets.CHARTURL }} \
+          ${{ secrets.IMAGES }}
