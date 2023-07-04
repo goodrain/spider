@@ -145,8 +145,8 @@ class HelmchartSpider(scrapy.Spider):
       logo = f"https://artifacthub.io/image/{logo}@2x"
     # 下载地址请求
     downloadUrl = data.get('content_url', '')
-    # if "github.com" in downloadUrl:
-    #   downloadUrl = "https://ghproxy.com/" + downloadUrl
+    if "github.com" in downloadUrl:
+      downloadUrl = "https://ghproxy.com/" + downloadUrl
     package_item['logo_image_id'] = logo
     package_item["readme"] = html_content
     package_item["file_urls"] = [downloadUrl]

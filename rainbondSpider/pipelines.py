@@ -57,7 +57,7 @@ class PostDbPipelin():
 
     # 参数设置
     market_url = os.getenv("MARKETURL")
-    martket_id = int(os.getenv("MARKETID"))
+    martket_id = os.getenv("MARKETID")
     url = f"{market_url}/app-server/markets/{martket_id}/helm/app"
     data = {
       'package_id': item['package_id'],
@@ -75,7 +75,7 @@ class PostDbPipelin():
 
     # 参数设置
     market_url = os.getenv("MARKETURL")
-    martket_id = int(os.getenv("MARKETID"))
+    martket_id = os.getenv("MARKETID")
     url = f"{market_url}/app-server/markets/{martket_id}/helm/app"
     data = {
       'package_id': item['package_id'],
@@ -210,7 +210,7 @@ class ImagesDownloadPipeline(ImagesPipeline):
           checksum = md5sum(buf)
           file_name = item["name"]
           market_url = os.getenv("MARKETURL")
-          martket_id = int(os.getenv("MARKETID"))
+          martket_id = os.getenv("MARKETID")
           url = "{}/app-server/markets/{}/helm/{}/icon".format(market_url,martket_id, file_name)
           headers = {'Content-Type': 'image/jpeg'}
           resp = requests.post(url, data=buf.getvalue(), headers=headers)

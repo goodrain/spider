@@ -1,9 +1,8 @@
 name: RainbondSpider
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   run-docker-command:
