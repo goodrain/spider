@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 import pymysql
 from scrapy import Request
@@ -15,11 +16,11 @@ class PostDbPipelin():
 
   def open_spider(self, spider):
     self.conn = pymysql.connect(
-      host="localhost",
-      port=3306,
-      user='root',
-      password='gr123465!',
-      database='helmDetail',
+      host=os.getenv("HOST"),
+      port=int(os.getenv("PORT")),
+      user=os.getenv("USER"),
+      password=os.getenv("PASSWORD"),
+      database=os.getenv("DATABASE"),
       charset="utf8mb4"
     )
     self.cursor = self.conn.cursor()
@@ -55,8 +56,9 @@ class PostDbPipelin():
     # 执行新增操作
 
     # 参数设置
-
-    url = "https://hub.grapps.cn/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
+    market_url = os.getenv("MARKETURL")
+    martket_id = int(os.getenv("MARKETID"))
+    url = f"{market_url}/app-server/markets/{martket_id}/helm/app"
     data = {
       'package_id': item['package_id'],
       'version': item['version'],
@@ -72,8 +74,9 @@ class PostDbPipelin():
   def update_item(self, item):
 
     # 参数设置
-
-    url = "https://hub.grapps.cn/app-server/markets/859a51f9bb3b48b5bfd222e3bef56425/helm/app"
+    market_url = os.getenv("MARKETURL")
+    martket_id = int(os.getenv("MARKETID"))
+    url = f"{market_url}/app-server/markets/{martket_id}/helm/app"
     data = {
       'package_id': item['package_id'],
       'version': item['version'],
@@ -95,11 +98,11 @@ class DbPipelin():
 
   def open_spider(self, spider):
     self.conn = pymysql.connect(
-      host="localhost",
-      port=3306,
-      user='root',
-      password='gr123465!',
-      database='helmDetail',
+      host=os.getenv("HOST"),
+      port=int(os.getenv("PORT")),
+      user=os.getenv("USER"),
+      password=os.getenv("PASSWORD"),
+      database=os.getenv("DATABASE"),
       charset="utf8mb4"
     )
     self.cursor = self.conn.cursor()
@@ -206,8 +209,9 @@ class ImagesDownloadPipeline(ImagesPipeline):
           buf.seek(0)
           checksum = md5sum(buf)
           file_name = item["name"]
-          market_id = "859a51f9bb3b48b5bfd222e3bef56425"
-          url = "https://hub.grapps.cn/app-server/markets/{}/helm/{}/icon".format(market_id, file_name)
+          market_url = os.getenv("MARKETURL")
+          martket_id = int(os.getenv("MARKETID"))
+          url = "{}/app-server/markets/{}/helm/{}/icon".format(market_url,martket_id, file_name)
           headers = {'Content-Type': 'image/jpeg'}
           resp = requests.post(url, data=buf.getvalue(), headers=headers)
       return checksum
@@ -231,7 +235,8 @@ class FileDownloadPipeline(FilesPipeline):
       buf = BytesIO(response.body)
       checksum = md5sum(buf)
       buf.seek(0)
-      url = "https://charts.grapps.cn/api/charts"
+      chart_url = os.getenv("CHARTURL")
+      url = f"{chart_url}/api/charts"
       headers = {"Content-Type": "application/octet-stream"}
       chart_resp = requests.post(url, headers=headers, data=buf).json()
       return checksum

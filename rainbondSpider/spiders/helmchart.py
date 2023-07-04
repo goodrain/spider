@@ -1,4 +1,5 @@
 import copy
+import os
 import scrapy
 import datetime
 from rainbondSpider.items import PackageItem
@@ -120,7 +121,8 @@ class HelmchartSpider(scrapy.Spider):
     # 获取应用介绍、logo地址
     html_content = data.get('readme', '')
     # 替换 readme 内容
-    new_repo_url = f"https://charts.grapps.cn/"
+    chart_url = os.getenv("CHARTURL")
+    new_repo_url = f"{chart_url}/"
     new_repo_name=f" appstore/{package_item['name']}"
     pattern = r'helm (repo add|install) ([^\s]+) ([^\s]+)'
     result = re.search(pattern, html_content)
@@ -143,8 +145,8 @@ class HelmchartSpider(scrapy.Spider):
       logo = f"https://artifacthub.io/image/{logo}@2x"
     # 下载地址请求
     downloadUrl = data.get('content_url', '')
-    if "github.com" in downloadUrl:
-      downloadUrl = "https://ghproxy.com/" + downloadUrl
+    # if "github.com" in downloadUrl:
+    #   downloadUrl = "https://ghproxy.com/" + downloadUrl
     package_item['logo_image_id'] = logo
     package_item["readme"] = html_content
     package_item["file_urls"] = [downloadUrl]
