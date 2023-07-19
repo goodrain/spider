@@ -2,7 +2,7 @@ name: RainbondSpider
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 16 * * *'
 
 jobs:
   run-docker-command:

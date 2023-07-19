@@ -163,38 +163,6 @@ class DbPipelin():
     versions = [v[0] for v in self.cursor.fetchall()]
     return versions
 
-#
-# class FileDownloadPipeline(FilesPipeline):
-#   def file_path(self, request, response=None, info=None):
-#     tgz = request.meta["tgz"]
-#     file_name = tgz
-#     return r'/rainchart/%s' % (file_name)
-#   def get_media_requests(self, item, info):
-#     if item["file_urls"]:
-#       for url in item["file_urls"]:
-#         tgz = url.split("/")[-1]
-#         name = tgz.split("-")[0]
-#         temp_version = tgz.split("-")[1]
-#         version = temp_version.rstrip(".tgz")
-#         mete = {
-#           "tgz": tgz,
-#           "name": name,
-#           "version": version,
-#         }
-#         yield Request(url, meta=mete)
-
-# class ImagesDownloadPipeline(ImagesPipeline):
-#   def get_media_requests(self, item, info):
-#       if item["image_urls"]:
-#         for url in item["image_urls"]:
-#           mete = {
-#             "name": item["name"],
-#           }
-#           yield Request(url, meta=mete)
-#   def file_path(self, request, response=None, info=None):
-#     name = request.meta["name"]
-#     image_guid = name
-#     return f'/rainchart/{image_guid}.jpg'
 
 class ImagesDownloadPipeline(ImagesPipeline):
 
