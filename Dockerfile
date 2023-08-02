@@ -2,11 +2,13 @@ FROM python:slim
 
 COPY ./rainbondSpider /rainbondSpider
 
-COPY ./scrapy.cfg /scrapy.cfg
+WORKDIR / .
 
-WORKDIR /rainbondSpider
+COPY ./scrapy.cfg ./scrapy.cfg
 
-RUN pip install -r requirements.txt
+COPY ./main.py ./main.py
 
-CMD scrapy crawl helmchart
+RUN pip install -r ./rainbondSpider/requirements.txt
+
+CMD python3 main.py
 
